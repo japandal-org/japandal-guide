@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Japandal — Guide d'utilisation</title>
+<style>
+  :root{
+    --primary:#0066FF;
+    --primary-dark:#0052CC;
+    --bg:#F8F9FA;
+    --card:#FFFFFF;
+    --border:#ECEEF1;
+    --text:#111827;
+    --muted:#6B7280;
+    --radius:16px;
+    --amber:#F59E0B;
+    --emerald:#10B981;
+    --red:#EF4444;
+    --violet:#7C3AED;
+    --indigo:#4F46E5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    font-size:15px;
+  }
+  a{color:var(--primary);}
+  img{max-width:100%;}
+
+  /* Topbar */
+  .topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border);}
+  .topbar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
+  .brand{font-weight:900;font-size:18px;display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;}
+  .brand-logo{background:var(--primary);color:#fff;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 10px rgba(0,102,255,.25);flex-shrink:0;}
+  .brand-sub{font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:4px 10px;border-radius:999px;margin-left:4px;text-transform:uppercase;letter-spacing:.06em;}
+  .menu-toggle{display:none;border:1px solid var(--border);background:#fff;border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer;align-items:center;justify-content:center;}
+
+  /* Layout */
+  .layout{max-width:1400px;margin:0 auto;display:flex;align-items:flex-start;gap:32px;padding:24px;}
+  .sidebar{width:266px;flex-shrink:0;position:sticky;top:76px;max-height:calc(100vh - 96px);overflow-y:auto;padding:4px 10px 24px 0;}
+  .sidebar-section{margin-bottom:22px;}
+  .sidebar-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--muted);margin:0 0 8px 12px;}
+  .sidebar a{display:block;padding:7px 12px;border-radius:10px;font-size:13.5px;font-weight:600;color:#374151;text-decoration:none;transition:all .15s;margin-bottom:2px;}
+  .sidebar a:hover{background:#fff;color:var(--text);}
+  .sidebar a.active{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(0,102,255,.25);}
+
+  .content{flex:1;min-width:0;}
+  .part-title{font-size:24px;font-weight:900;margin:52px 0 18px;display:flex;align-items:center;gap:10px;scroll-margin-top:90px;}
+  .part-title:first-child{margin-top:0;}
+
+  section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px;margin-bottom:18px;scroll-margin-top:90px;}
+  section h2{font-size:19px;font-weight:900;margin:0 0 6px;display:flex;align-items:center;gap:10px;}
+  section h3{font-size:15px;font-weight:800;margin:22px 0 8px;}
+  section .lead{color:var(--muted);font-size:13.5px;margin:0 0 16px;}
+  section p{margin:8px 0;}
+  section ul, section ol{margin:8px 0;padding-left:22px;}
+  section li{margin:4px 0;}
+
+  /* Hero intro */
+  .hero{background:linear-gradient(135deg,#0066FF 0%,#0052CC 55%,#1e1b4b 100%);color:#fff;border:none;}
+  .hero h1{font-size:28px;font-weight:900;margin:0 0 8px;}
+  .hero p{color:#dbeafe;font-size:14.5px;max-width:640px;}
+  .hero .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .hero .pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;}
+
+  /* Callouts */
+  .callout{display:flex;gap:12px;border-radius:14px;padding:14px 16px;margin:14px 0;border:1px solid;font-size:13.5px;}
+  .callout span.icon{font-size:18px;line-height:1;flex-shrink:0;}
+  .callout-info{background:#EFF6FF;border-color:#DBEAFE;color:#1e3a8a;}
+  .callout-warn{background:#FFFBEB;border-color:#FEF3C7;color:#92400e;}
+  .callout-tip{background:#ECFDF5;border-color:#D1FAE5;color:#065f46;}
+  .callout-danger{background:#FEF2F2;border-color:#FEE2E2;color:#991b1b;}
+  .callout strong{font-weight:800;}
+
+  /* Badges / pills */
+  .badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+  .badge-blue{background:#DBEAFE;color:#1d4ed8;}
+  .badge-amber{background:#FEF3C7;color:#92400e;}
+  .badge-emerald{background:#D1FAE5;color:#065f46;}
+  .badge-violet{background:#EDE9FE;color:#5b21b6;}
+  .badge-red{background:#FEE2E2;color:#991b1b;}
+  .badge-gray{background:#F3F4F6;color:#374151;}
+  .badge-purple{background:#F3E8FF;color:#6b21a8;}
+  .badge-green{background:#DCFCE7;color:#166534;}
+
+  /* Tables */
+  .table-wrap{overflow-x:auto;margin:12px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800;background:#FAFBFC;}
+  tr:last-child td{border-bottom:none;}
+
+  /* Grids / cards */
+  .grid{display:grid;gap:12px;margin:14px 0;}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  .mini-card{border:1px solid var(--border);border-radius:14px;padding:14px 16px;background:#FAFBFC;}
+  .mini-card .mc-icon{font-size:22px;margin-bottom:6px;display:block;}
+  .mini-card h4{margin:0 0 4px;font-size:14px;font-weight:800;}
+  .mini-card p{margin:0;font-size:12.5px;color:var(--muted);}
+
+  /* Steps */
+  .steps{counter-reset:step;list-style:none;padding:0;margin:14px 0;}
+  .steps li{counter-increment:step;position:relative;padding:4px 0 18px 40px;border-left:2px solid var(--border);margin-left:15px;}
+  .steps li:last-child{border-left:2px solid transparent;padding-bottom:0;}
+  .steps li::before{content:counter(step);position:absolute;left:-15px;top:0;width:30px;height:30px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;box-shadow:0 0 0 4px #fff;}
+  .steps li strong{display:block;font-size:14px;margin-bottom:2px;}
+  .steps li span.desc{font-size:13px;color:var(--muted);}
+
+  /* Flow diagram */
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0;}
+  .flow .node{background:#fff;border:2px solid var(--border);border-radius:12px;padding:8px 14px;font-size:12.5px;font-weight:800;text-align:center;}
+  .flow .arrow{color:var(--muted);font-size:16px;font-weight:900;}
+  .flow .node.amber{border-color:var(--amber);color:#92400e;background:#FFFBEB;}
+  .flow .node.blue{border-color:var(--primary);color:#1d4ed8;background:#EFF6FF;}
+  .flow .node.violet{border-color:var(--violet);color:#5b21b6;background:#F5F3FF;}
+  .flow .node.emerald{border-color:var(--emerald);color:#065f46;background:#ECFDF5;}
+  .flow .node.green{border-color:#16a34a;color:#166534;background:#F0FDF4;}
+  .flow .node.gray{border-color:#9ca3af;color:#374151;background:#F9FAFB;}
+  .flow .node.red{border-color:var(--red);color:#991b1b;background:#FEF2F2;}
+
+  /* Code/kbd */
+  .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#F3F4F6;border:1px solid var(--border);border-radius:6px;padding:1px 6px;font-size:12.5px;}
+
+  /* Role badges */
+  .role-admin{background:#111827;color:#fff;}
+  .role-manager{background:#DBEAFE;color:#1d4ed8;}
+  .role-staff{background:#D1FAE5;color:#065f46;}
+  .role-finance{background:#FEF3C7;color:#92400e;}
+
+  .check{color:#16a34a;font-weight:900;}
+  .cross{color:#d1d5db;font-weight:900;}
+
+  footer.content-footer{text-align:center;color:var(--muted);font-size:12.5px;padding:30px 10px;}
+
+  /* Mobile */
+  @media (max-width: 980px){
+    .menu-toggle{display:flex;}
+    .layout{flex-direction:column;padding:16px;gap:0;}
+    .sidebar{
+      position:fixed;top:0;left:0;bottom:0;width:80%;max-width:300px;
+      background:#fff;z-index:60;max-height:100vh;
+      padding:80px 16px 24px;box-shadow:0 0 40px rgba(0,0,0,.15);
+      transform:translateX(-100%);transition:transform .25s ease;
+    }
+    .sidebar.open{transform:translateX(0);}
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:55;}
+    .sidebar-overlay.open{display:block;}
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    section{padding:20px;}
+  }
+
+  @media print{
+    .sidebar,.topbar,.menu-toggle,.sidebar-overlay{display:none;}
+    .layout{display:block;padding:0;}
+    section{break-inside:avoid;box-shadow:none;border:1px solid #ddd;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#presentation" class="brand">
+      <span class="brand-logo">📦</span>
+      Japandal
+      <span class="brand-sub">Guide d'utilisation</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-title">Démarrage</p>
+      <a href="#presentation">Présentation</a>
+      <a href="#acces">Accès &amp; comptes</a>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">🛍️ Boutique en ligne</p>
+      <a href="#accueil">Accueil &amp; navigation</a>
+      <a href="#catalogue">Catalogue &amp; recherche</a>
+      <a href="#produit">Fiche produit</a>
+      <a href="#panier">Panier</a>
+      <a href="#commande">Passer une commande</a>
+      <a href="#compte">Mon compte</a>
+      <a href="#fidelite">Fidélité &amp; points</a>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">⚙️ Back-office (Admin)</p>
+      <a href="#bo-connexion">Connexion &amp; rôles</a>
+      <a href="#bo-dashboard">Tableau de bord</a>
+      <a href="#bo-produits">Produits</a>
+      <a href="#bo-categories">Catégories &amp; tags</a>
+      <a href="#bo-commandes">Commandes</a>
+      <a href="#bo-transactions">Transactions</a>
+      <a href="#bo-promos">Codes promo</a>
+      <a href="#bo-clients">Clients</a>
+      <a href="#bo-livraison">Livraison</a>
+      <a href="#bo-utilisateurs">Utilisateurs BO</a>
+      <a href="#bo-parametres">Paramètres</a>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">📚 Référence</p>
+      <a href="#zones">Zones de livraison</a>
+      <a href="#paiements">Modes de paiement</a>
+      <a href="#statuts">Statuts de commande</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <main class="content">
+
+    <section id="presentation" class="hero">
+      <h1>Bienvenue dans le guide d'utilisation Japandal</h1>
+      <p>
+        Japandal est une boutique en ligne (façon Konga / Shein) qui permet aux clients du Sénégal et
+        de la sous-région CEDEAO de commander des produits en ligne, avec paiement à la livraison ou
+        via Mobile Money. Ce guide explique comment utiliser <strong>la boutique</strong> (côté client)
+        et <strong>le back-office</strong> (côté équipe Japandal) qui sert à gérer le catalogue, les
+        commandes, les clients et la livraison.
+      </p>
+      <div class="pill-row">
+        <span class="pill">🛍️ Boutique en ligne</span>
+        <span class="pill">⚙️ Back-office de gestion</span>
+        <span class="pill">🚚 Livraison Dakar · Sénégal · CEDEAO</span>
+        <span class="pill">💳 Paiements Mobile Money &amp; à la livraison</span>
+        <span class="pill">🏆 Programme de fidélité</span>
+      </div>
+    </section>
+
+    <section id="acces">
+      <h2>🔑 Accès &amp; comptes</h2>
+      <p class="lead">Adresses utiles pour accéder à la boutique et à l'espace de gestion.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Espace</th><th>Adresse (URL)</th><th>Pour qui ?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Boutique en ligne</strong></td>
+              <td><span class="kbd">http://localhost:3000</span></td>
+              <td>Tous les visiteurs et clients</td>
+            </tr>
+            <tr>
+              <td><strong>Connexion / Inscription client</strong></td>
+              <td><span class="kbd">http://localhost:3000/login</span></td>
+              <td>Clients</td>
+            </tr>
+            <tr>
+              <td><strong>Back-office (espace de gestion)</strong></td>
+              <td><span class="kbd">http://localhost:3000/admin/login</span></td>
+              <td>Équipe Japandal (Admin, Manager, Vendeur, Finance)</td>
+            </tr>
+            <tr>
+              <td><strong>API technique</strong></td>
+              <td><span class="kbd">http://localhost:8080/api</span></td>
+              <td>Équipe technique</td>
+            </tr>
+            <tr>
+              <td><strong>Documentation API (Swagger)</strong></td>
+              <td><span class="kbd">http://localhost:8080/api/swagger-ui.html</span></td>
+              <td>Équipe technique</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Compte administrateur par défaut</h3>
+      <p>Un compte « Super Admin » est créé automatiquement à l'installation :</p>
+      <div class="grid grid-2">
+        <div class="mini-card"><span class="mc-icon">📧</span><h4>Email</h4><p><span class="kbd">admin@japandal.com</span></p></div>
+        <div class="mini-card"><span class="mc-icon">🔒</span><h4>Mot de passe</h4><p><span class="kbd">Admin1234!</span></p></div>
+      </div>
+      <div class="callout callout-warn">
+        <span class="icon">⚠️</span>
+        <div><strong>Important :</strong> changez ce mot de passe dès la première connexion
+        (menu <em>Administration → Utilisateurs BO</em>), surtout sur un site mis en ligne.</div>
+      </div>
+    </section>
+
+    <h1 class="part-title" id="part-boutique">🛍️ Boutique en ligne</h1>
+    <section id="accueil">
+      <h2>🏠 Accueil &amp; navigation</h2>
+      <p class="lead">La page d'accueil met en avant les promotions et les catégories de la boutique.</p>
+
+      <h3>Barre supérieure</h3>
+      <ul>
+        <li><strong>Bandeau d'annonces déroulant</strong> : livraison gratuite, codes promo, infos sous-région CEDEAO, etc.</li>
+        <li><strong>Logo Japandal</strong> : ramène à l'accueil.</li>
+        <li><strong>Barre de recherche</strong> avec suggestions automatiques pendant la frappe.</li>
+        <li><strong>❤️ Favoris</strong>, <strong>👤 Mon compte</strong> et <strong>🛒 Panier</strong> (avec compteur d'articles).</li>
+      </ul>
+
+      <h3>Catégories rapides</h3>
+      <div class="grid grid-4">
+        <div class="mini-card"><span class="mc-icon">✨</span><h4>Nouveautés</h4></div>
+        <div class="mini-card"><span class="mc-icon">⚡</span><h4>Flash Sales</h4></div>
+        <div class="mini-card"><span class="mc-icon">📱</span><h4>Électronique</h4></div>
+        <div class="mini-card"><span class="mc-icon">👗</span><h4>Mode</h4></div>
+        <div class="mini-card"><span class="mc-icon">🏠</span><h4>Maison</h4></div>
+        <div class="mini-card"><span class="mc-icon">💄</span><h4>Beauté</h4></div>
+        <div class="mini-card"><span class="mc-icon">⚽</span><h4>Sport</h4></div>
+        <div class="mini-card"><span class="mc-icon">💻</span><h4>Informatique</h4></div>
+      </div>
+
+      <h3>Page d'accueil</h3>
+      <ul>
+        <li>Bannière principale animée (promotions du moment).</li>
+        <li>Compte à rebours <strong>Flash Sale</strong> sur certaines offres.</li>
+        <li>Sections de produits par catégorie et « Produits vedettes ».</li>
+        <li>« Vu récemment » : reprend les derniers produits consultés.</li>
+        <li>Avis clients / preuve sociale.</li>
+      </ul>
+
+      <div class="callout callout-info">
+        <span class="icon">📱</span>
+        <div>Sur mobile, une <strong>barre de navigation basse</strong> (Accueil, Catégories, Panier, Compte…) facilite la navigation au pouce.</div>
+      </div>
+    </section>
+
+    <section id="catalogue">
+      <h2>🔎 Catalogue &amp; recherche</h2>
+      <p class="lead">La page <span class="kbd">/products</span> regroupe tous les produits de la boutique.</p>
+
+      <ul>
+        <li><strong>Recherche</strong> : taper un mot-clé affiche des suggestions en direct (autocomplétion).</li>
+        <li><strong>Filtres</strong> : par catégorie, et tri (prix croissant/décroissant, nouveautés…).</li>
+        <li><strong>Vue rapide</strong> : un clic sur l'icône loupe d'un produit ouvre un aperçu (image, prix, ajout au panier) sans quitter la liste.</li>
+        <li><strong>Favoris</strong> : cliquer sur le cœur ❤️ d'une carte produit l'ajoute à « Mes favoris ».</li>
+      </ul>
+    </section>
+
+    <section id="produit">
+      <h2>🏷️ Fiche produit</h2>
+      <p class="lead">La page d'un produit regroupe toutes les informations nécessaires avant l'achat.</p>
+
+      <ul>
+        <li><strong>Galerie d'images</strong> du produit.</li>
+        <li><strong>Prix</strong> : prix normal, et prix promo barré si une réduction est active.</li>
+        <li><strong>Variantes</strong> (taille, couleur, capacité de stockage…) : à sélectionner avant de pouvoir ajouter le produit au panier, si le produit en propose.</li>
+        <li><strong>Quantité minimale de commande</strong> : certains produits imposent d'en commander plusieurs (ex. lots), affichée sur la fiche et dans le panier.</li>
+        <li><strong>Tags</strong> : étiquettes colorées (ex. « Nouveau », « Promo »).</li>
+        <li><strong>Avis clients</strong> : notes et commentaires des acheteurs. Laisser un avis rapporte des points de fidélité.</li>
+        <li><strong>Délai de livraison estimé</strong> pour ce produit, selon la zone choisie.</li>
+        <li>Boutons <strong>« Ajouter au panier »</strong> et <strong>❤️ « Ajouter aux favoris »</strong>.</li>
+      </ul>
+    </section>
+    <section id="panier">
+      <h2>🛒 Panier</h2>
+      <p class="lead">Le panier est accessible à tout moment via l'icône en haut à droite (tiroir latéral).</p>
+      <ul>
+        <li>Modifier la quantité (+/-) ou supprimer un article.</li>
+        <li>Le panier est <strong>conservé automatiquement</strong> même si vous fermez le navigateur (sauvegardé sur l'appareil).</li>
+        <li>Les prix sont rafraîchis à chaque visite (promotions, frais au poids…).</li>
+        <li>Bouton pour passer directement au tunnel de commande.</li>
+      </ul>
+    </section>
+
+    <section id="commande">
+      <h2>✅ Passer une commande</h2>
+      <p class="lead">Le tunnel de commande (<span class="kbd">/checkout</span>) se déroule en 5 étapes.</p>
+
+      <div class="flow">
+        <div class="node blue">1. Panier</div><span class="arrow">→</span>
+        <div class="node blue">2. Adresse</div><span class="arrow">→</span>
+        <div class="node blue">3. Livraison</div><span class="arrow">→</span>
+        <div class="node blue">4. Paiement</div><span class="arrow">→</span>
+        <div class="node emerald">5. Confirmation</div>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <strong>1. Panier</strong>
+          <span class="desc">Vérifier les articles, les quantités, et appliquer un éventuel <strong>code promo</strong>
+          (ex : <span class="kbd">BIENVENUE10</span>). La connexion est requise pour continuer ; un client non connecté
+          est invité à se connecter ou à créer un compte (le panier est conservé).</span>
+        </li>
+        <li>
+          <strong>2. Adresse de livraison</strong>
+          <span class="desc">Renseigner prénom, nom, rue/quartier, ville, pays et numéro de téléphone.</span>
+        </li>
+        <li>
+          <strong>3. Zone de livraison</strong>
+          <span class="desc">Choisir parmi les zones disponibles (Dakar Express, Sénégal National, CEDEAO).
+          Le tarif et le délai affichés dépendent du <strong>poids total</strong> du panier.</span>
+        </li>
+        <li>
+          <strong>4. Mode de paiement</strong>
+          <span class="desc">Choisir un mode de paiement (Wave, Orange Money, Free Money, Carte bancaire, Virement
+          bancaire ou Paiement à la livraison). Pour le Mobile Money, un numéro de téléphone est demandé.</span>
+        </li>
+        <li>
+          <strong>5. Confirmation</strong>
+          <span class="desc">Récapitulatif complet (articles, adresse, livraison, paiement). Chaque section peut être
+          modifiée via le lien « Modifier ». Cliquer sur <strong>« Confirmer »</strong> finalise la commande.</span>
+        </li>
+      </ol>
+
+      <h3>Après la commande</h3>
+      <ul>
+        <li>Un <strong>numéro de commande</strong> est généré (ex : <span class="kbd">JPD-2026-000123</span>).</li>
+        <li>Des <strong>instructions de paiement</strong> s'affichent selon le mode choisi (ex : numéro Wave à utiliser, RIB pour le virement…).</li>
+        <li>Un <strong>email de confirmation</strong> est envoyé au client.</li>
+        <li>Des <strong>points de fidélité</strong> sont automatiquement crédités (1 point par tranche de 1 000 XOF dépensés).</li>
+        <li>La commande devient consultable dans <em>Mon compte → Mes commandes</em>.</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <span class="icon">💡</span>
+        <div>La progression dans le tunnel est sauvegardée : si vous quittez la page, vous reprenez à la même étape en revenant.</div>
+      </div>
+    </section>
+    <section id="compte">
+      <h2>👤 Mon compte</h2>
+      <p class="lead">Connexion : <span class="kbd">/login</span> · Inscription : <span class="kbd">/register</span></p>
+
+      <p>Une fois connecté, l'espace <strong>« Mon compte »</strong> regroupe :</p>
+      <div class="grid grid-2">
+        <div class="mini-card"><span class="mc-icon">📦</span><h4>Mes commandes</h4><p>Historique des commandes et suivi du statut de chacune.</p></div>
+        <div class="mini-card"><span class="mc-icon">❤️</span><h4>Mes favoris</h4><p>Produits sauvegardés pour plus tard.</p></div>
+        <div class="mini-card"><span class="mc-icon">🏆</span><h4>Fidélité &amp; Points</h4><p>Niveau, points cumulés et avantages (voir section suivante).</p></div>
+        <div class="mini-card"><span class="mc-icon">📍</span><h4>Mes adresses</h4><p>Gérer les adresses de livraison enregistrées.</p></div>
+        <div class="mini-card"><span class="mc-icon">⚙️</span><h4>Paramètres</h4><p>Profil, mot de passe et sécurité du compte.</p></div>
+        <div class="mini-card"><span class="mc-icon">🚪</span><h4>Déconnexion</h4><p>Se déconnecter de l'appareil en un clic.</p></div>
+      </div>
+    </section>
+
+    <section id="fidelite">
+      <h2>🏆 Fidélité &amp; points</h2>
+      <p class="lead">Le programme de fidélité récompense les achats et l'engagement des clients.</p>
+
+      <h3>Niveaux</h3>
+      <div class="grid grid-4">
+        <div class="mini-card"><span class="mc-icon">⭐</span><h4>Bronze</h4><p>Dès 0 point</p></div>
+        <div class="mini-card"><span class="mc-icon">🏆</span><h4>Argent</h4><p>Dès 500 points</p></div>
+        <div class="mini-card"><span class="mc-icon">⚡</span><h4>Or</h4><p>Dès 2 000 points</p></div>
+        <div class="mini-card"><span class="mc-icon">👑</span><h4>Platine</h4><p>Dès 5 000 points</p></div>
+      </div>
+      <p>Chaque niveau débloque des avantages supplémentaires, visibles sur la page <em>Fidélité &amp; Points</em>.</p>
+
+      <h3>Comment gagner des points ?</h3>
+      <div class="grid grid-2">
+        <div class="mini-card"><span class="mc-icon">🛒</span><h4>1 XOF dépensé = 1 point</h4><p>Crédité automatiquement à la confirmation de la commande.</p></div>
+        <div class="mini-card"><span class="mc-icon">📝</span><h4>Laisser un avis = 50 points</h4><p>Sur un produit acheté.</p></div>
+        <div class="mini-card"><span class="mc-icon">👥</span><h4>Parrainer un ami = 200 points</h4><p>Pour chaque filleul.</p></div>
+        <div class="mini-card"><span class="mc-icon">🎂</span><h4>Anniversaire = 100 points bonus</h4><p>Cadeau automatique.</p></div>
+      </div>
+
+      <p>L'historique détaillé des points gagnés est consultable dans <em>Mon compte → Fidélité &amp; Points</em>.</p>
+    </section>
+
+    <h1 class="part-title" id="part-boffice">⚙️ Back-office (Administration)</h1>
+    <section id="bo-connexion">
+      <h2>🔐 Connexion &amp; rôles</h2>
+      <p class="lead">Le back-office est accessible sur <span class="kbd">/admin/login</span>, réservé à l'équipe Japandal.</p>
+
+      <h3>Les 4 rôles</h3>
+      <div class="grid grid-2">
+        <div class="mini-card"><span class="badge role-admin">Super Admin</span><p style="margin-top:8px;">Accès complet à tous les modules. Seul rôle pouvant gérer les <strong>comptes BO</strong> et les <strong>paramètres</strong>.</p></div>
+        <div class="mini-card"><span class="badge role-manager">Responsable boutique</span><p style="margin-top:8px;">Accès large : catalogue, ventes, clients, livraison.</p></div>
+        <div class="mini-card"><span class="badge role-staff">Vendeur</span><p style="margin-top:8px;">Catalogue, commandes et clients (sans accès finance ni promotions).</p></div>
+        <div class="mini-card"><span class="badge role-finance">Finance</span><p style="margin-top:8px;">Commandes et transactions uniquement.</p></div>
+      </div>
+
+      <h3>Accès aux menus par rôle (par défaut)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Menu</th><th><span class="badge role-admin">Super Admin</span></th><th><span class="badge role-manager">Manager</span></th><th><span class="badge role-staff">Vendeur</span></th><th><span class="badge role-finance">Finance</span></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Dashboard</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td></tr>
+            <tr><td>Rapports</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td></tr>
+            <tr><td>Produits / Catégories / Tags</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td></tr>
+            <tr><td>Commandes</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td></tr>
+            <tr><td>Transactions</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td><td class="check">✔</td></tr>
+            <tr><td>Codes promo</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td><td class="cross">—</td></tr>
+            <tr><td>Clients</td><td class="check">✔</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td></tr>
+            <tr><td>Livraison</td><td class="check">✔</td><td class="check">✔</td><td class="cross">—</td><td class="cross">—</td></tr>
+            <tr><td>Utilisateurs BO / Paramètres</td><td class="check">✔</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-info">
+        <span class="icon">⚙️</span>
+        <div>Ces accès (sauf <em>Utilisateurs BO</em> et <em>Paramètres</em>, réservés au Super Admin) sont
+        <strong>configurables</strong> par le Super Admin dans <em>Paramètres → Habilitations</em>.</div>
+      </div>
+    </section>
+
+    <section id="bo-dashboard">
+      <h2>📊 Tableau de bord</h2>
+      <p class="lead">Première page après connexion : vue d'ensemble de l'activité de la boutique.</p>
+
+      <h3>Indicateurs clés (KPIs)</h3>
+      <div class="grid grid-4">
+        <div class="mini-card"><span class="mc-icon">💰</span><h4>Revenus totaux</h4></div>
+        <div class="mini-card"><span class="mc-icon">📦</span><h4>Commandes</h4></div>
+        <div class="mini-card"><span class="mc-icon">📅</span><h4>Revenus du mois</h4></div>
+        <div class="mini-card"><span class="mc-icon">👥</span><h4>Clients</h4><p>(masqué pour le rôle Finance)</p></div>
+      </div>
+
+      <h3>Répartition des commandes</h3>
+      <div class="grid grid-4">
+        <div class="mini-card"><span class="badge badge-amber">⏳ En attente</span></div>
+        <div class="mini-card"><span class="badge badge-blue">✔ Confirmées</span></div>
+        <div class="mini-card"><span class="badge badge-violet">📦 En préparation</span></div>
+        <div class="mini-card"><span class="badge badge-emerald">🚚 Expédiées</span></div>
+      </div>
+
+      <h3>Autres éléments</h3>
+      <ul>
+        <li>Une <strong>pastille rouge</strong> dans le menu « Commandes » et en haut de page indique le nombre de commandes en attente.</li>
+        <li><strong>Raccourcis rapides</strong> : Nouveau produit, Gérer les commandes, Transactions, Voir les clients (selon le rôle).</li>
+        <li>Lien vers <strong>Rapports</strong> pour des analyses plus détaillées (ventes, revenus dans le temps…).</li>
+        <li>Lien <strong>« Voir la boutique »</strong> pour ouvrir le site client dans un nouvel onglet.</li>
+      </ul>
+    </section>
+    <section id="bo-produits">
+      <h2>📦 Produits</h2>
+      <p class="lead">Gestion complète du catalogue : <em>Catalogue → Produits</em>.</p>
+
+      <h3>Liste des produits</h3>
+      <ul>
+        <li><strong>Recherche</strong> par nom ou SKU.</li>
+        <li><strong>Filtres rapides</strong> :
+          <span class="badge badge-gray">Tous</span>
+          <span class="badge badge-emerald">Actifs</span>
+          <span class="badge badge-gray">Inactifs</span>
+          <span class="badge badge-red">Ruptures</span>
+          <span class="badge badge-amber">⭐ Vedette</span>
+        </li>
+      </ul>
+
+      <h3>Créer / modifier un produit</h3>
+      <div class="grid grid-2">
+        <div class="mini-card"><h4>📝 Informations générales</h4><p>Nom, description, SKU, catégorie.</p></div>
+        <div class="mini-card"><h4>💰 Prix</h4><p>Prix de base + prix promo optionnel (affiché barré sur la fiche).</p></div>
+        <div class="mini-card"><h4>⚖️ Poids (g)</h4><p>Utilisé pour calculer les frais de livraison et les éventuels frais au gramme.</p></div>
+        <div class="mini-card"><h4>📊 Stock</h4><p>Quantité disponible. Passe en « Rupture » à 0.</p></div>
+        <div class="mini-card"><h4>🔢 Quantité minimum de commande</h4><p>Impose un minimum d'unités par commande.</p></div>
+        <div class="mini-card"><h4>🚚 Délai de livraison spécifique</h4><p>Jours min/max propres à ce produit (optionnel).</p></div>
+        <div class="mini-card"><h4>✅ Actif / ⭐ Vedette</h4><p>Visibilité sur la boutique et mise en avant en page d'accueil.</p></div>
+        <div class="mini-card"><h4>🖼️ Images</h4><p>Ajout par URL, plusieurs images possibles.</p></div>
+      </div>
+
+      <h3>Tags &amp; variantes</h3>
+      <ul>
+        <li><strong>Tags</strong> : étiquettes colorées (ex. « Promo », « Nouveau ») associées au produit.</li>
+        <li><strong>Variantes / attributs</strong> : pour des produits déclinés (taille, couleur, stockage…), des modèles prêts à l'emploi sont proposés :
+          <ul>
+            <li>Tailles vêtements (XS → XXL)</li>
+            <li>Tailles chaussures (36 → 45)</li>
+            <li>Couleurs basiques</li>
+            <li>Stockage téléphone (64 Go → 512 Go)</li>
+            <li>Tailles + Couleurs combinées</li>
+          </ul>
+          Il est aussi possible de créer un groupe d'attributs personnalisé.
+        </li>
+      </ul>
+    </section>
+
+    <section id="bo-categories">
+      <h2>🗂️ Catégories &amp; tags</h2>
+      <p class="lead"><em>Catalogue → Catégories</em> et <em>Catalogue → Tags &amp; Attributs</em>.</p>
+
+      <div class="grid grid-2">
+        <div class="mini-card"><span class="mc-icon">🗂️</span><h4>Catégories</h4><p>Organisent le catalogue (Électronique, Mode, Maison, Beauté, Sport, Informatique…) et alimentent le menu de la boutique et les filtres.</p></div>
+        <div class="mini-card"><span class="mc-icon">🏷️</span><h4>Tags &amp; attributs</h4><p>Étiquettes visuelles colorées (ex. « Promo », « Nouveau ») et groupes d'attributs réutilisables pour créer des variantes de produits.</p></div>
+      </div>
+    </section>
+    <section id="bo-commandes">
+      <h2>🛍️ Commandes</h2>
+      <p class="lead"><em>Ventes → Commandes</em> — liste de toutes les commandes passées sur la boutique.</p>
+
+      <ul>
+        <li>Filtrer les commandes par <strong>statut</strong>.</li>
+        <li>Ouvrir une commande pour voir le détail : client, articles commandés, adresse de livraison, mode et statut de paiement, montants (sous-total, livraison, total).</li>
+        <li><strong>Faire évoluer le statut</strong> de la commande au fil de sa préparation (voir la section <a href="#statuts">Statuts de commande</a> pour le cycle complet).</li>
+        <li>Une <strong>pastille rouge</strong> sur le menu indique le nombre de commandes « En attente » à traiter.</li>
+      </ul>
+
+      <div class="callout callout-warn">
+        <span class="icon">⚠️</span>
+        <div>Les transitions de statut sont <strong>encadrées</strong> : impossible de revenir en arrière une fois la commande avancée
+        (ex. une commande « Expédiée » ne peut plus repasser « En préparation »).</div>
+      </div>
+    </section>
+
+    <section id="bo-transactions">
+      <h2>💳 Transactions</h2>
+      <p class="lead"><em>Ventes → Transactions</em> — suivi des paiements liés aux commandes.</p>
+      <ul>
+        <li>Visualise le <strong>statut de paiement</strong> de chaque commande :
+          <span class="badge badge-amber">En attente</span>
+          <span class="badge badge-emerald">Payé</span>
+          <span class="badge badge-red">Échoué</span>
+          <span class="badge badge-gray">Remboursé</span>
+        </li>
+        <li>Réservé aux rôles <span class="badge role-admin">Super Admin</span>, <span class="badge role-manager">Manager</span> et <span class="badge role-finance">Finance</span>.</li>
+      </ul>
+      <div class="callout callout-info">
+        <span class="icon">ℹ️</span>
+        <div>Les paiements sont actuellement <strong>simulés</strong> : aucun prestataire de paiement réel n'est connecté pour le moment.</div>
+      </div>
+    </section>
+    <section id="bo-promos">
+      <h2>🎁 Codes promo</h2>
+      <p class="lead"><em>Ventes → Codes promo</em> — créer et gérer les réductions.</p>
+
+      <h3>Créer un code</h3>
+      <div class="grid grid-2">
+        <div class="mini-card"><h4>Code</h4><p>Ex : <span class="kbd">BIENVENUE10</span> (saisi en majuscules par le client au panier).</p></div>
+        <div class="mini-card"><h4>Type de réduction</h4><p><span class="badge badge-blue">Pourcentage %</span> ou <span class="badge badge-emerald">Montant fixe (XOF)</span></p></div>
+        <div class="mini-card"><h4>Valeur</h4><p>Ex : 10 (%) ou 5 000 (XOF).</p></div>
+        <div class="mini-card"><h4>Montant minimum de commande</h4><p>Optionnel — le code n'est valable qu'au-delà de ce montant.</p></div>
+      </div>
+
+      <ul>
+        <li>Une <strong>description</strong> interne aide à se souvenir de l'objectif du code (ex. « Code pour nouveaux clients »).</li>
+        <li>Chaque code peut être <strong>activé / désactivé</strong> sans le supprimer.</li>
+        <li>Côté boutique, le client saisit le code à l'<strong>étape « Panier »</strong> du tunnel de commande.</li>
+      </ul>
+    </section>
+
+    <section id="bo-clients">
+      <h2>👥 Clients</h2>
+      <p class="lead"><em>Clients &amp; Livraison → Clients</em> — liste des clients inscrits sur la boutique.</p>
+      <p>Accessible aux rôles <span class="badge role-admin">Super Admin</span>, <span class="badge role-manager">Manager</span> et <span class="badge role-staff">Vendeur</span>.</p>
+    </section>
+
+    <section id="bo-livraison">
+      <h2>🚚 Livraison</h2>
+      <p class="lead"><em>Clients &amp; Livraison → Livraison</em> — configuration des zones et tarifs de livraison.</p>
+
+      <ul>
+        <li>Gérer les <strong>zones de livraison</strong> (Dakar Express, Sénégal National, CEDEAO — voir la <a href="#zones">section Référence</a>).</li>
+        <li>Pour chaque zone : nom, description, et <strong>paliers tarifaires par poids</strong> (prix + délai estimé en jours min/max).</li>
+        <li>Ces tarifs sont ceux affichés au client lors de l'étape « Livraison » du tunnel de commande, calculés selon le <strong>poids total du panier</strong>.</li>
+      </ul>
+    </section>
+    <section id="bo-utilisateurs">
+      <h2>🧑‍💼 Utilisateurs BO</h2>
+      <p class="lead"><em>Administration → Utilisateurs BO</em> — réservé au <span class="badge role-admin">Super Admin</span>.</p>
+
+      <h3>Créer un compte BO</h3>
+      <ul>
+        <li>Prénom, nom, email, téléphone.</li>
+        <li>Choix du <strong>rôle</strong> : Super Admin, Responsable boutique, Vendeur ou Finance.</li>
+        <li>Mot de passe (8 caractères minimum) — ou <strong>génération automatique</strong> d'un mot de passe sécurisé.</li>
+      </ul>
+
+      <h3>Liste des comptes</h3>
+      <p>Chaque compte affiche son rôle sous forme de badge coloré, ainsi qu'un récapitulatif des <strong>habilitations par rôle</strong> pour vérifier rapidement qui a accès à quoi.</p>
+
+      <div class="callout callout-warn">
+        <span class="icon">🔒</span>
+        <div>Pensez à <strong>changer le mot de passe du compte Super Admin par défaut</strong> dès que possible (voir <a href="#acces">Accès &amp; comptes</a>).</div>
+      </div>
+    </section>
+
+    <section id="bo-parametres">
+      <h2>⚙️ Paramètres</h2>
+      <p class="lead"><em>Administration → Paramètres</em> — réservé au <span class="badge role-admin">Super Admin</span>, organisé en 2 onglets.</p>
+
+      <h3>📐 Onglet « Tarification »</h3>
+      <div class="grid grid-2">
+        <div class="mini-card">
+          <span class="mc-icon">⚖️</span>
+          <h4>Frais au gramme — tarif par défaut</h4>
+          <p>Un montant (XOF/g) ajouté au prix de chaque produit selon son poids, <strong>en plus</strong> des frais de livraison de la zone.</p>
+        </div>
+        <div class="mini-card">
+          <span class="mc-icon">🪜</span>
+          <h4>Paliers tarifaires</h4>
+          <p>Permet d'appliquer un tarif au gramme différent selon des plages de poids (ex : 0–500 g, au-delà de 2 000 g…).</p>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Simulation</strong> : aperçu en direct de l'impact des tarifs sur les produits les plus lourds du catalogue (poids, prix de base, frais ajoutés, prix final), avant d'enregistrer.</li>
+        <li>Une <strong>alerte</strong> s'affiche si un tarif rend le frais disproportionné par rapport au prix d'un produit (le frais dépasserait le prix du produit).</li>
+      </ul>
+
+      <h3>🛡️ Onglet « Habilitations »</h3>
+      <p>Permet au Super Admin d'<strong>activer ou désactiver l'accès</strong> de chaque rôle (Manager, Vendeur, Finance) à chaque module :
+      Catalogue, Commandes, Transactions, Clients, Promotions (codes promo + livraison).</p>
+      <div class="callout callout-info">
+        <span class="icon">ℹ️</span>
+        <div>Les menus <em>Utilisateurs BO</em> et <em>Paramètres</em> restent toujours réservés au Super Admin et ne sont pas configurables ici.</div>
+      </div>
+    </section>
+
+    <h1 class="part-title" id="part-reference">📚 Référence</h1>
+    <section id="zones">
+      <h2>🌍 Zones de livraison</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Zone</th><th>Couverture</th><th>Délai estimé</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>🏙️ Dakar Express</strong></td>
+              <td>Région de Dakar</td>
+              <td><span class="badge badge-emerald">24 – 48 h</span></td>
+            </tr>
+            <tr>
+              <td><strong>🇸🇳 Sénégal National</strong></td>
+              <td>Reste du Sénégal</td>
+              <td><span class="badge badge-blue">2 – 7 jours</span></td>
+            </tr>
+            <tr>
+              <td><strong>🌍 Sous-région CEDEAO</strong></td>
+              <td>Mali, Côte d'Ivoire, Guinée, Gambie, Mauritanie, Burkina Faso, Togo, Bénin, Niger, Ghana, Nigeria…</td>
+              <td><span class="badge badge-amber">7 – 20 jours</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Le tarif exact dépend du <strong>poids total du panier</strong> et des paliers configurés dans
+      <em>Back-office → Livraison</em> (voir <a href="#bo-livraison">Livraison</a>).</p>
+    </section>
+
+    <section id="paiements">
+      <h2>💳 Modes de paiement</h2>
+      <div class="grid grid-3">
+        <div class="mini-card"><span class="mc-icon">🌊</span><h4>Wave</h4><p>Mobile Money — paiement instantané.</p></div>
+        <div class="mini-card"><span class="mc-icon">🟠</span><h4>Orange Money</h4><p>Mobile Money.</p></div>
+        <div class="mini-card"><span class="mc-icon">🟢</span><h4>Free Money</h4><p>Mobile Money.</p></div>
+        <div class="mini-card"><span class="mc-icon">💳</span><h4>Carte bancaire</h4><p>Visa / Mastercard.</p></div>
+        <div class="mini-card"><span class="mc-icon">🏦</span><h4>Virement bancaire</h4><p>Confirmation sous 24–48 h (BNDE).</p></div>
+        <div class="mini-card"><span class="mc-icon">💵</span><h4>Paiement à la livraison</h4><p>Réglé à réception du colis.</p></div>
+      </div>
+      <p>Pour les options Mobile Money (Wave, Orange Money, Free Money), un <strong>numéro de téléphone</strong> est demandé au moment du paiement.</p>
+      <div class="callout callout-info">
+        <span class="icon">ℹ️</span>
+        <div>Les paiements sont actuellement <strong>simulés</strong> : le client reçoit des instructions à suivre après confirmation
+        de sa commande, mais aucun prestataire de paiement réel n'est branché pour l'instant.</div>
+      </div>
+    </section>
+    <section id="statuts">
+      <h2>📦 Statuts de commande</h2>
+      <p class="lead">Une commande progresse selon un cycle précis. Une fois avancée, elle ne peut pas revenir en arrière.</p>
+
+      <h3>Cycle normal</h3>
+      <div class="flow">
+        <div class="node amber">En attente</div><span class="arrow">→</span>
+        <div class="node blue">Confirmée</div><span class="arrow">→</span>
+        <div class="node violet">En préparation</div><span class="arrow">→</span>
+        <div class="node emerald">Expédiée</div><span class="arrow">→</span>
+        <div class="node green">Livrée</div><span class="arrow">→</span>
+        <div class="node gray">Remboursée</div>
+      </div>
+
+      <h3>Annulation</h3>
+      <p>Une commande peut être <span class="badge badge-red">Annulée</span> uniquement tant qu'elle est
+      <strong>En attente</strong>, <strong>Confirmée</strong> ou <strong>En préparation</strong>. Une fois
+      <strong>Expédiée</strong> ou <strong>Livrée</strong>, l'annulation n'est plus possible (seul le
+      remboursement reste disponible après livraison).</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Statut</th><th>Signification</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-amber">En attente</span></td><td>Commande passée, en attente de confirmation par l'équipe.</td></tr>
+            <tr><td><span class="badge badge-blue">Confirmée</span></td><td>La commande est validée et va être préparée.</td></tr>
+            <tr><td><span class="badge badge-violet">En préparation</span></td><td>Les articles sont en cours de préparation pour l'expédition.</td></tr>
+            <tr><td><span class="badge badge-emerald">Expédiée</span></td><td>Le colis a quitté l'entrepôt et est en cours de livraison.</td></tr>
+            <tr><td><span class="badge badge-green">Livrée</span></td><td>Le client a reçu sa commande.</td></tr>
+            <tr><td><span class="badge badge-red">Annulée</span></td><td>La commande a été annulée (statut final).</td></tr>
+            <tr><td><span class="badge badge-gray">Remboursée</span></td><td>La commande livrée a été remboursée (statut final).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Statuts de paiement</h3>
+      <div class="grid grid-4">
+        <div class="mini-card"><span class="badge badge-amber">En attente</span></div>
+        <div class="mini-card"><span class="badge badge-emerald">Payé</span></div>
+        <div class="mini-card"><span class="badge badge-red">Échoué</span></div>
+        <div class="mini-card"><span class="badge badge-gray">Remboursé</span></div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>❓ Questions fréquentes</h2>
+
+      <h3>J'ai oublié le mot de passe du compte Super Admin, que faire ?</h3>
+      <p>Reconnectez-vous avec le compte par défaut <span class="kbd">admin@japandal.com</span> /
+      <span class="kbd">Admin1234!</span> s'il n'a pas encore été changé, puis modifiez le mot de passe dans
+      <em>Administration → Utilisateurs BO</em>. Si ce mot de passe a déjà été changé et perdu, une intervention
+      technique (réinitialisation côté base de données) est nécessaire.</p>
+
+      <h3>Comment ajouter un produit avec des tailles ou des couleurs ?</h3>
+      <p>Dans <em>Catalogue → Produits</em>, créez ou modifiez un produit, puis dans la section variantes choisissez
+      un modèle prêt à l'emploi (« Tailles vêtements », « Couleurs basiques »…) ou créez un groupe d'attributs
+      personnalisé.</p>
+
+      <h3>Comment changer les frais de livraison ?</h3>
+      <p>Dans <em>Clients &amp; Livraison → Livraison</em>, modifiez les paliers tarifaires (prix et délais) de
+      chaque zone. Pour ajouter un frais supplémentaire selon le poids du produit, utilisez l'onglet
+      <em>Tarification</em> dans <em>Administration → Paramètres</em>.</p>
+
+      <h3>Comment créer un code promo de bienvenue ?</h3>
+      <p>Dans <em>Ventes → Codes promo</em>, cliquez sur « Ajouter », choisissez un code (ex.
+      <span class="kbd">BIENVENUE10</span>), un type (pourcentage ou montant fixe) et une valeur, puis activez-le.</p>
+
+      <h3>Pourquoi un membre de mon équipe ne voit pas certains menus ?</h3>
+      <p>L'accès aux menus dépend de son <strong>rôle</strong> et des <strong>habilitations</strong> définies par le
+      Super Admin dans <em>Administration → Paramètres → Habilitations</em>. Les menus « Utilisateurs BO » et
+      « Paramètres » restent toujours réservés au Super Admin.</p>
+
+      <h3>Le panier d'un client est-il conservé s'il ferme son navigateur ?</h3>
+      <p>Oui, le panier est sauvegardé sur l'appareil du client. La progression dans le tunnel de commande
+      (adresse, livraison, paiement choisis) est également conservée pendant la session.</p>
+
+      <h3>Comment un client gagne-t-il des points de fidélité ?</h3>
+      <p>Automatiquement à chaque commande validée (1 point / 1 000 XOF dépensés), en laissant un avis produit
+      (+50 points), en parrainant un ami (+200 points), ou le jour de son anniversaire (+100 points bonus).</p>
+    </section>
+
+    <footer class="content-footer">
+      Japandal — Guide d'utilisation interne · Document généré pour l'équipe et les clients de la plateforme.
+    </footer>
+  </main>
+</div>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  function closeMenu(){ sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.addEventListener('click', closeMenu);
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  const links = sidebar.querySelectorAll('a[href^="#"]');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + entry.target.id;
+      const link = sidebar.querySelector(`a[href="${id}"]`);
+      if (!link) return;
+      if (entry.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
