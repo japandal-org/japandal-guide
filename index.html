@@ -563,20 +563,35 @@
         <div class="mini-card"><h4>🖼️ Images</h4><p>Ajout par URL, plusieurs images possibles.</p></div>
       </div>
 
-      <h3>Tags &amp; variantes</h3>
-      <ul>
-        <li><strong>Tags</strong> : étiquettes colorées (ex. « Promo », « Nouveau ») associées au produit.</li>
-        <li><strong>Variantes / attributs</strong> : pour des produits déclinés (taille, couleur, stockage…), des modèles prêts à l'emploi sont proposés :
-          <ul>
-            <li>Tailles vêtements (XS → XXL)</li>
-            <li>Tailles chaussures (36 → 45)</li>
-            <li>Couleurs basiques</li>
-            <li>Stockage téléphone (64 Go → 512 Go)</li>
-            <li>Tailles + Couleurs combinées</li>
-          </ul>
-          Il est aussi possible de créer un groupe d'attributs personnalisé.
-        </li>
-      </ul>
+      <h3>🏷️ Tags</h3>
+      <p>Étiquettes colorées (ex. « Promo », « Nouveau ») associées au produit, choisies dans la liste existante (voir <a href="#bo-categories">Catégories &amp; tags</a>).</p>
+
+      <h3 id="variantes">🎨 Variantes (couleur, taille, stockage…)</h3>
+      <p>Dans la fiche produit, le bloc <strong>« Variantes »</strong> permet de décliner un produit selon un ou plusieurs attributs (le client choisit alors une couleur et/ou une taille sur la fiche produit avant d'ajouter au panier).</p>
+
+      <div class="grid grid-2">
+        <div class="mini-card"><h4>⚡ Presets rapides</h4><p>Boutons prêts à l'emploi qui remplissent automatiquement un ou plusieurs groupes : <strong>Tailles vêtements</strong> (XS → XXL), <strong>Tailles chaussures</strong> (36 → 45), <strong>Couleurs basiques</strong>, <strong>Stockage téléphone</strong> (64 Go → 512 Go), ou <strong>Tailles + Couleurs</strong> combinées. Le bouton « ✕ Vider » réinitialise tout.</p></div>
+        <div class="mini-card"><h4>➕ Groupe personnalisé</h4><p>Pour un attribut qui ne correspond à aucun preset, saisissez un nom de groupe (ex. <span class="kbd">parfum</span>, <span class="kbd">matière</span>…) dans le champ en bas du bloc et cliquez <strong>« + Groupe »</strong>.</p></div>
+      </div>
+
+      <h4>Ajouter une couleur</h4>
+      <p>Le groupe <span class="kbd">colors</span> a un éditeur dédié, plus riche qu'une simple liste — pour chaque couleur :</p>
+      <ol class="steps">
+        <li><strong>Nom</strong> <span class="desc">ex. « Noir », « Rouge ».</span></li>
+        <li><strong>Pastille de couleur</strong> <span class="desc">sélecteur visuel utilisé pour l'aperçu (le petit rond coloré affiché sur la fiche produit et la liste de la boutique).</span></li>
+        <li><strong>Stock</strong> <span class="desc">quantité disponible <em>propre à cette couleur</em>, indépendante du stock global du produit — une vente dans cette couleur décrémente ce compteur.</span></li>
+        <li><strong>Image</strong> <span class="desc">soit en collant une URL, soit en cliquant sur 📤 pour uploader directement une photo (utile pour montrer le produit réellement dans cette couleur).</span></li>
+        <li>Cliquer <strong>« + Ajouter »</strong> pour valider la couleur.</li>
+      </ol>
+      <p>Chaque couleur déjà ajoutée reste modifiable à tout moment (couleur, stock, image) ou peut être retirée avec le <strong>✕</strong>.</p>
+
+      <h4>Ajouter une taille ou un autre attribut simple</h4>
+      <p>Pour les groupes sans éditeur dédié (tailles, stockage, ou un groupe personnalisé), saisissez la valeur dans le champ puis appuyez sur <strong>Entrée</strong> (ou cliquez « + Ajouter »). Chaque valeur apparaît comme une étiquette retirable (✕ pour la supprimer).</p>
+
+      <div class="callout callout-tip">
+        <span class="icon">💡</span>
+        <div>Un produit peut combiner <strong>plusieurs groupes à la fois</strong> (ex. couleurs <strong>et</strong> tailles, via le preset « Tailles + Couleurs » ou en ajoutant les deux groupes séparément).</div>
+      </div>
     </section>
 
     <section id="bo-categories">
@@ -816,9 +831,10 @@
       reste nécessaire.</p>
 
       <h3>Comment ajouter un produit avec des tailles ou des couleurs ?</h3>
-      <p>Dans <em>Catalogue → Produits</em>, créez ou modifiez un produit, puis dans la section variantes choisissez
-      un modèle prêt à l'emploi (« Tailles vêtements », « Couleurs basiques »…) ou créez un groupe d'attributs
-      personnalisé.</p>
+      <p>Dans <em>Catalogue → Produits</em>, créez ou modifiez un produit, puis dans le bloc <a href="#variantes">Variantes</a>
+      choisissez un preset (« Tailles vêtements », « Couleurs basiques »…) ou créez un groupe personnalisé. Pour les
+      couleurs, un éditeur dédié permet en plus de définir une image et un stock propres à chaque couleur — voir le
+      détail dans la section <a href="#variantes">Variantes (couleur, taille, stockage…)</a>.</p>
 
       <h3>Comment changer les frais de livraison ?</h3>
       <p>Dans <em>Clients &amp; Livraison → Livraison</em>, modifiez les paliers tarifaires (prix et délais) de
