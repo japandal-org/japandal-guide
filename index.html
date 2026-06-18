@@ -251,31 +251,36 @@
           <tbody>
             <tr>
               <td><strong>Boutique en ligne</strong></td>
-              <td><span class="kbd">http://localhost:3000</span></td>
+              <td><span class="kbd">https://japandal.mobivara.com</span></td>
               <td>Tous les visiteurs et clients</td>
             </tr>
             <tr>
               <td><strong>Connexion / Inscription client</strong></td>
-              <td><span class="kbd">http://localhost:3000/login</span></td>
+              <td><span class="kbd">https://japandal.mobivara.com/login</span></td>
               <td>Clients</td>
             </tr>
             <tr>
               <td><strong>Back-office (espace de gestion)</strong></td>
-              <td><span class="kbd">http://localhost:3000/admin/login</span></td>
+              <td><span class="kbd">https://japandal.mobivara.com/admin/login</span></td>
               <td>Équipe Japandal (Admin, Manager, Vendeur, Finance)</td>
             </tr>
             <tr>
               <td><strong>API technique</strong></td>
-              <td><span class="kbd">http://localhost:8080/api</span></td>
+              <td><span class="kbd">https://japandal.mobivara.com/api</span></td>
               <td>Équipe technique</td>
             </tr>
             <tr>
               <td><strong>Documentation API (Swagger)</strong></td>
-              <td><span class="kbd">http://localhost:8080/api/swagger-ui.html</span></td>
+              <td><span class="kbd">https://japandal.mobivara.com/api/swagger-ui.html</span></td>
               <td>Équipe technique</td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="callout callout-info">
+        <span class="icon">ℹ️</span>
+        <div>En développement local, ces adresses sont respectivement <span class="kbd">http://localhost:3000</span>
+        (boutique/back-office) et <span class="kbd">http://localhost:8080/api</span> (API).</div>
       </div>
 
       <h3>Compte administrateur par défaut</h3>
@@ -411,9 +416,9 @@
 
       <h3>Après la commande</h3>
       <ul>
-        <li>Un <strong>numéro de commande</strong> est généré (ex : <span class="kbd">JPD-2026-000123</span>).</li>
+        <li>Un <strong>numéro de commande</strong> est généré (ex : <span class="kbd">JPN-20260618-1001</span>).</li>
         <li>Des <strong>instructions de paiement</strong> s'affichent selon le mode choisi (ex : numéro Wave à utiliser, RIB pour le virement…).</li>
-        <li>Un <strong>email de confirmation</strong> est envoyé au client.</li>
+        <li>Un <strong>email de confirmation</strong> détaillé (articles avec photo, total, adresse de livraison, mode de paiement) est envoyé au client, puis un nouvel email à <strong>chaque changement de statut</strong> (confirmée, en préparation, expédiée, livrée…) avec une frise de progression visuelle.</li>
         <li>Des <strong>points de fidélité</strong> sont automatiquement crédités (1 point par tranche de 1 000 XOF dépensés).</li>
         <li>La commande devient consultable dans <em>Mon compte → Mes commandes</em>.</li>
       </ul>
@@ -547,7 +552,8 @@
 
       <h3>Créer / modifier un produit</h3>
       <div class="grid grid-2">
-        <div class="mini-card"><h4>📝 Informations générales</h4><p>Nom, description, SKU, catégorie.</p></div>
+        <div class="mini-card"><h4>📝 Informations générales</h4><p>Nom, description, catégorie.</p></div>
+        <div class="mini-card"><h4>🔢 SKU</h4><p>Généré automatiquement par le système (ex. <span class="kbd">JPD-001000</span>) — non modifiable, pour garantir un identifiant unique et cohérent.</p></div>
         <div class="mini-card"><h4>💰 Prix</h4><p>Prix de base + prix promo optionnel (affiché barré sur la fiche).</p></div>
         <div class="mini-card"><h4>⚖️ Poids (g)</h4><p>Utilisé pour calculer les frais de livraison et les éventuels frais au gramme.</p></div>
         <div class="mini-card"><h4>📊 Stock</h4><p>Quantité disponible. Passe en « Rupture » à 0.</p></div>
@@ -590,6 +596,7 @@
         <li>Filtrer les commandes par <strong>statut</strong>.</li>
         <li>Ouvrir une commande pour voir le détail : client, articles commandés, adresse de livraison, mode et statut de paiement, montants (sous-total, livraison, total).</li>
         <li><strong>Faire évoluer le statut</strong> de la commande au fil de sa préparation (voir la section <a href="#statuts">Statuts de commande</a> pour le cycle complet).</li>
+        <li>Chaque changement de statut déclenche automatiquement un <strong>email détaillé au client</strong> (articles, total, adresse, frise de progression).</li>
         <li>Une <strong>pastille rouge</strong> sur le menu indique le nombre de commandes « En attente » à traiter.</li>
       </ul>
 
@@ -661,6 +668,7 @@
         <li>Prénom, nom, email, téléphone.</li>
         <li>Choix du <strong>rôle</strong> : Super Admin, Responsable boutique, Vendeur ou Finance.</li>
         <li>Mot de passe (8 caractères minimum) — ou <strong>génération automatique</strong> d'un mot de passe sécurisé.</li>
+        <li>Un <strong>email avec les identifiants de connexion</strong> est envoyé automatiquement au nouvel utilisateur.</li>
       </ul>
 
       <h3>Liste des comptes</h3>
@@ -798,11 +806,14 @@
     <section id="faq">
       <h2>❓ Questions fréquentes</h2>
 
-      <h3>J'ai oublié le mot de passe du compte Super Admin, que faire ?</h3>
-      <p>Reconnectez-vous avec le compte par défaut <span class="kbd">admin@japandal.com</span> /
-      <span class="kbd">Admin1234!</span> s'il n'a pas encore été changé, puis modifiez le mot de passe dans
-      <em>Administration → Utilisateurs BO</em>. Si ce mot de passe a déjà été changé et perdu, une intervention
-      technique (réinitialisation côté base de données) est nécessaire.</p>
+      <h3>J'ai oublié mon mot de passe (client ou compte BO), que faire ?</h3>
+      <p>Cliquez sur « Mot de passe oublié ? » sur la page de connexion (<span class="kbd">/login</span> côté
+      boutique, <span class="kbd">/admin/login</span> côté back-office) : un email contenant un lien de
+      réinitialisation, valable <strong>1 heure</strong>, est envoyé à l'adresse du compte. Pour le compte Super
+      Admin par défaut, vous pouvez aussi vous reconnecter directement avec <span class="kbd">admin@japandal.com</span> /
+      <span class="kbd">Admin1234!</span> s'il n'a jamais été changé. En dernier recours (email inaccessible et
+      mot de passe par défaut déjà changé), une intervention technique (réinitialisation côté base de données)
+      reste nécessaire.</p>
 
       <h3>Comment ajouter un produit avec des tailles ou des couleurs ?</h3>
       <p>Dans <em>Catalogue → Produits</em>, créez ou modifiez un produit, puis dans la section variantes choisissez
